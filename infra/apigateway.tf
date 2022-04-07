@@ -56,3 +56,20 @@ resource "aws_lambda_permission" "lambda_permission" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_deployment.api_deployment.execution_arn}/*/*"
 }
+
+resource "aws_api_gateway_deployment" "api_deployment_1" {
+  depends_on = [
+    aws_api_gateway_integration.integration,
+    aws_api_gateway_integration.integration_root,
+  ]
+
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  stage_name  = "1"
+}
+
+resource "aws_lambda_permission" "lambda_permission_1" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda_func.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_deployment.api_deployment_1.execution_arn}/*/*"
+}
