@@ -1,6 +1,7 @@
 resource "aws_lambda_function_url" "test_latest" {
   function_name      = local.app_id
   authorization_type = "NONE"
+  depends_on = [aws_lambda_function.lambda_func]
 }
 
 # resource "aws_lambda_function_url" "test_live" {
