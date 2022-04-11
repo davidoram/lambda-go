@@ -25,7 +25,6 @@ data "archive_file" "lambda_zip" {
 resource "random_id" "unique_suffix" {
   byte_length = 2
 }
-
 output "api_url" {
-  value = aws_api_gateway_deployment.api_deployment.invoke_url
+  value = aws_lambda_function_url.test_latest.function_url
 }
